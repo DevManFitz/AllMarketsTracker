@@ -9,13 +9,13 @@ class TestApiViewModel constructor() : ViewModel() {
 
     private val coinService = CoinMarketCapService.create()
 
-    init {
+    fun fetchLatestListings() {
         viewModelScope.launch {
             try {
                 val response = coinService.getLatestListings()
                 if (response.isSuccessful) {
-                    val json = response.body()?.string()
-                    Log.d("API_TEST", "Response: $json")
+                    val json = response.body()?.toString()
+                    Log.d("API_TEST", "Response:\n$json")
                 } else {
                     Log.e("API_TEST", "Error: ${response.code()} ${response.message()}")
                 }

@@ -2,11 +2,12 @@ package edu.vt.mobiledev.allmarketstracker
 
 import okhttp3.OkHttpClient
 import retrofit2.Response
-import okhttp3.ResponseBody
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
+import edu.vt.mobiledev.allmarketstracker.api.CoinMarketCapResponse
+
 
 interface CoinMarketCapService {
     @GET("v1/cryptocurrency/listings/latest")
@@ -14,7 +15,7 @@ interface CoinMarketCapService {
         @Query("start") start: Int = 1,
         @Query("limit") limit: Int = 100,
         @Query("convert") convert: String = "USD"
-    ): Response<ResponseBody> // Or a data class for decoding
+    ): Response<CoinMarketCapResponse>
 
     companion object {
         fun create(): CoinMarketCapService {
