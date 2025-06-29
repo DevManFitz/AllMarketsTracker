@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">AllMarketsTracker</string>
     <string name="crypto_logo">Crypto Logo</string>
+    <string name="bitcoin_cash_bch">Bitcoin Cash (BCH)</string>
+    <string name="_1_589">$1,589</string>
+    <string name="allmarketstracker">AllMarketsTracker</string>
 </resources>
