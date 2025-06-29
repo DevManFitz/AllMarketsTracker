@@ -34,7 +34,7 @@ class CryptoListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.assetRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.assetRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {

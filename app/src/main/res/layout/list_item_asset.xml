@@ -1,41 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="12dp">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/asset_name"
+        style="@style/TextAppearance.Material3.BodyLarge"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Bitcoin (BTC)"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/asset_logo"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/asset_price"
+        style="@style/TextAppearance.Material3.BodyMedium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="$29,874.00"
+        android:textColor="?android:attr/textColorSecondary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/asset_logo"
+        app:layout_constraintTop_toBottomOf="@id/asset_name" />
 
     <ImageView
-        android:id="@+id/list_item_asset_image"
+        android:id="@+id/asset_logo"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_marginEnd="16dp"
+        android:padding="8dp"
         android:contentDescription="@string/crypto_logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:src="@drawable/bch_logo" />
-
-    <TextView
-        android:id="@+id/list_item_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-        app:layout_constraintStart_toEndOf="@id/list_item_asset_image"
-        app:layout_constraintTop_toTopOf="@id/list_item_asset_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:paddingStart="12dp"
-        tools:text="Bitcoin Cash (BCH)" />
-
-    <TextView
-        android:id="@+id/list_item_price"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-        app:layout_constraintStart_toStartOf="@id/list_item_title"
-        app:layout_constraintTop_toBottomOf="@id/list_item_title"
-        app:layout_constraintBottom_toBottomOf="@id/list_item_asset_image"
-        app:layout_constraintEnd_toEndOf="@id/list_item_title"
-        tools:text="$238.15" />
+        tools:src="@drawable/bch_logo"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

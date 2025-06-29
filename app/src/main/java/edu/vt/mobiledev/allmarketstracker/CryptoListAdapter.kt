@@ -3,12 +3,13 @@ package edu.vt.mobiledev.allmarketstracker
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import edu.vt.mobiledev.allmarketstracker.databinding.ListItemAssetBinding
 import edu.vt.mobiledev.allmarketstracker.model.CryptoAsset
 
 class CryptoListAdapter(
     private val assets: List<CryptoAsset>
-) : RecyclerView.Adapter<CryptoHolder>() {
+) : RecyclerView.Adapter<CryptoListAdapter.CryptoHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CryptoHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -22,16 +23,19 @@ class CryptoListAdapter(
     }
 
     override fun getItemCount(): Int = assets.size
-}
 
-class CryptoHolder(
-    private val binding: ListItemAssetBinding
-) : RecyclerView.ViewHolder(binding.root) {
+    class CryptoHolder(
+        private val binding: ListItemAssetBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(asset: CryptoAsset) {
-        binding.listItemTitle.text = asset.name
-        binding.listItemPrice.text = "$${String.format("%.2f", asset.price)}"
-        // You can add Glide or Coil here to load asset.imageUrl if available
+        fun bind(asset: CryptoAsset) {
+            binding.assetName.text = "${asset.name} (${asset.symbol})"
+            binding.assetPrice.text = "$%.4f".format(asset.price)
+            binding.assetLogo.load(asset.logoUrl) {
+                crossfade(true)
+                placeholder(R.drawable.bch_logo)
+                error(R.drawable.error)
+            }
+        }
     }
 }
-

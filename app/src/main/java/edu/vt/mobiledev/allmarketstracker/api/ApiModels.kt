@@ -14,3 +14,11 @@ data class ApiCoin(
 data class Quote(
     val price: Double
 )
+
+data class CryptoInfoResponse(
+    val data: Map<String, CryptoInfo>
+)
+
+data class CryptoInfo(
+    val logo: String
+)
