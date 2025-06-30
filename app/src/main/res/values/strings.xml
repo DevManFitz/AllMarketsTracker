@@ -4,4 +4,21 @@
     <string name="bitcoin_cash_bch">Bitcoin Cash (BCH)</string>
     <string name="_1_589">$1,589</string>
     <string name="allmarketstracker">AllMarketsTracker</string>
+    <string name="chart_placeholder">[Chart Placeholder]</string>
+    <string name="market_cap_600b">Market Cap: $600B</string>
+    <string name="volume_24h_100b">Volume (24h): $100B</string>
+    <string name="max_supply_21m">Max Supply: 21M</string>
+    <string name="all_time_high_68_000">All-Time High: $68,000</string>
+    <string name="all_time_low_67">All-Time Low: $67</string>
+    <string name="unlocked_market_cap_300b">Unlocked Market Cap: $300B</string>
+    <string name="fully_diluted_cap_1_2t">Fully Diluted Cap: $1.2T</string>
+    <string name="circulating_supply_19m">Circulating Supply: 19M</string>
+    <string name="total_supply_21m">Total Supply: 21M</string>
+    <string name="rank_1">Rank: #1</string>
+    <string name="_1h">1h</string>
+    <string name="_24h">24h</string>
+    <string name="_7d">7d</string>
+    <string name="_30d">30d</string>
+    <string name="_1y">1y</string>
+    <string name="all">All</string>
 </resources>

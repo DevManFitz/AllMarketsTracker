@@ -7,6 +7,8 @@ import coil.load
 import edu.vt.mobiledev.allmarketstracker.databinding.ListItemAssetBinding
 import edu.vt.mobiledev.allmarketstracker.model.CryptoAsset
 
+import androidx.navigation.findNavController
+
 class CryptoListAdapter(
     private val assets: List<CryptoAsset>
 ) : RecyclerView.Adapter<CryptoListAdapter.CryptoHolder>() {
@@ -20,6 +22,12 @@ class CryptoListAdapter(
     override fun onBindViewHolder(holder: CryptoHolder, position: Int) {
         val asset = assets[position]
         holder.bind(asset)
+
+        holder.itemView.setOnClickListener {
+            val action = CryptoListFragmentDirections
+                .actionCryptoListFragmentToCryptoDetailFragment(asset)
+            it.findNavController().navigate(action)
+        }
     }
 
     override fun getItemCount(): Int = assets.size

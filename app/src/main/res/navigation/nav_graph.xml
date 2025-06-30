@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/cryptoListFragment">
 
+    <fragment
+        android:id="@+id/cryptoListFragment"
+        android:name="edu.vt.mobiledev.allmarketstracker.CryptoListFragment"
+        android:label="CryptoListFragment"
+        tools:layout="@layout/fragment_crypto_list" >
+        <action
+            android:id="@+id/action_cryptoListFragment_to_cryptoDetailFragment"
+            app:destination="@id/cryptoDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/cryptoDetailFragment"
+        android:name="edu.vt.mobiledev.allmarketstracker.CryptoDetailFragment"
+        android:label="CryptoDetailFragment"
+        tools:layout="@layout/fragment_crypto_detail">
+    <argument
+        android:name="asset"
+        app:argType="edu.vt.mobiledev.allmarketstracker.model.CryptoAsset" />
+    </fragment>
 </navigation>
