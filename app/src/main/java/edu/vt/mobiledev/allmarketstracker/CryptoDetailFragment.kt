@@ -14,6 +14,7 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import android.graphics.Color
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresExtension
 import edu.vt.mobiledev.allmarketstracker.api.BitcoinChartApi
 import androidx.lifecycle.lifecycleScope
@@ -37,6 +38,87 @@ class CryptoDetailFragment : Fragment() {
         return binding.root
     }
 
+    private fun temporarilyDisableButtons() {
+        val buttons = listOf(
+            binding.btn1h,
+            binding.btn24h,
+            binding.btn7d,
+            binding.btn30d,
+            binding.btn1y,
+            binding.btnAll
+        )
+        buttons.forEach { it.isEnabled = false }
+
+        binding.root.postDelayed({
+            buttons.forEach { it.isEnabled = true }
+        }, 2000L) // re-enable after 2 seconds
+    }
+
+    private fun loadBitcoinChart(days: Int) {
+        temporarilyDisableButtons()
+        binding.lineChart.setNoDataText("Loading chart...")
+
+        binding.lineChart.clear()
+        binding.lineChart.data = null
+        binding.lineChart.invalidate()
+
+        lifecycleScope.launch {
+            try {
+                val response = BitcoinChartApi.retrofitService.getBitcoinChart(days = days)
+                val prices = response.prices.mapIndexed { index, pair ->
+                    Entry(index.toFloat(), pair[1].toFloat())
+                }
+
+                val dataSet = LineDataSet(prices, "BTC Price")
+                dataSet.color = Color.CYAN
+                dataSet.valueTextColor = Color.WHITE
+                dataSet.setDrawFilled(true)
+
+                val lineData = LineData(dataSet)
+
+                with(binding.lineChart) {
+                    clear() // Force reset old data
+                    data = lineData
+                    description.text = when (days) {
+                        1 -> "24h Price"
+                        7 -> "7d Price"
+                        30 -> "30d Price"
+                        365 -> "1y Price"
+                        1095 -> "3y Price"
+                        else -> "$days-day Price"
+                    }
+                    setTouchEnabled(true)
+                    setPinchZoom(true)
+                    notifyDataSetChanged() // Force re-render
+                    invalidate() // Refresh chart
+                    Log.d("ChartDebug", "Entry count: ${binding.lineChart.data?.entryCount}")
+                }
+            } catch (e: HttpException) {
+                val errorCode = e.code()
+                val message = when (errorCode) {
+                    429 -> "Rate limit exceeded. Please wait and try again."
+                    else -> "HTTP error: $errorCode"
+                }
+
+                with(binding.lineChart) {
+                    clear()
+                    data = null
+                    setNoDataText(message)
+                    invalidate()
+                }
+            } catch (e: Exception) {
+                Log.e("ChartError", "Unexpected error", e)
+                with(binding.lineChart) {
+                    clear()
+                    data = null
+                    setNoDataText("Chart load failed.")
+                    invalidate()
+                }
+            }
+        }
+    }
+
+
     @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,32 +132,16 @@ class CryptoDetailFragment : Fragment() {
         // TODO: Set up line chart view and buttons to toggle timeframes
 
         if (asset.symbol.equals("BTC", ignoreCase = true)) {
-            lifecycleScope.launch {
-                try {
-                    val response = BitcoinChartApi.retrofitService.getBitcoinChart(days = 1)
-                    val prices = response.prices.mapIndexed { index, pair ->
-                        Entry(index.toFloat(), pair[1].toFloat())
-                    }
+            loadBitcoinChart(days = 1)
 
-                    val dataSet = LineDataSet(prices, "BTC Price")
-                    dataSet.color = Color.CYAN
-                    dataSet.valueTextColor = Color.WHITE
-                    dataSet.setDrawFilled(true)
-
-                    val lineData = LineData(dataSet)
-                    binding.lineChart.data = lineData
-                    binding.lineChart.description.text = "24h Price"
-                    binding.lineChart.setTouchEnabled(true)
-                    binding.lineChart.setPinchZoom(true)
-                    binding.lineChart.invalidate()
-                } catch (e: HttpException) {
-                    binding.lineChart.setNoDataText("HTTP error: ${e.code()}")
-                } catch (e: Exception) {
-                    val errorCode = if (e is HttpException) e.code() else "unknown"
-                    binding.lineChart.setNoDataText("Chart load failed (HTTP $errorCode)")
-                }
-            }
-        } else {
+            binding.btn1h.setOnClickListener { loadBitcoinChart(days = 1) }
+            binding.btn24h.setOnClickListener { loadBitcoinChart(days = 1) }
+            binding.btn7d.setOnClickListener { loadBitcoinChart(days = 7) }
+            binding.btn30d.setOnClickListener { loadBitcoinChart(days = 30) }
+            binding.btn1y.setOnClickListener { loadBitcoinChart(days = 365) }
+            binding.btnAll.setOnClickListener { loadBitcoinChart(days = 1095) }
+        }
+        else {
             val entries = listOf(
                 Entry(0f, 10f),
                 Entry(1f, 12f),
@@ -95,6 +161,7 @@ class CryptoDetailFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        binding.lineChart.clear()
         _binding = null
     }
 }
