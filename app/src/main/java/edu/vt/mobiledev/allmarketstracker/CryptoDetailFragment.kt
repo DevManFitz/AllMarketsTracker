@@ -96,8 +96,14 @@ class CryptoDetailFragment : Fragment() {
             } catch (e: HttpException) {
                 val errorCode = e.code()
                 val message = when (errorCode) {
-                    429 -> "Rate limit exceeded. Please wait and try again."
-                    else -> "HTTP error: $errorCode"
+                    429 -> {
+                        Log.d("ChartError", "Rate limit exceeded (429). Showing fallback message.")
+                        "Rate limit exceeded. Please wait and try again."
+                    }
+                    else -> {
+                        Log.d("ChartError", "HTTP error: $errorCode")
+                        "HTTP error: $errorCode"
+                    }
                 }
 
                 with(binding.lineChart) {
