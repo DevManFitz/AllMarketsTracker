@@ -9,6 +9,12 @@ import androidx.navigation.fragment.navArgs
 import coil.load
 import edu.vt.mobiledev.allmarketstracker.databinding.FragmentCryptoDetailBinding
 
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import android.graphics.Color
+
+
 class CryptoDetailFragment : Fragment() {
 
     private var _binding: FragmentCryptoDetailBinding? = null
@@ -35,6 +41,29 @@ class CryptoDetailFragment : Fragment() {
         binding.assetLogo.load(asset.logoUrl)
 
         // TODO: Set up line chart view and buttons to toggle timeframes
+
+        // === Dummy Data for Chart Preview ===
+        val entries = listOf(
+            Entry(0f, 10f),
+            Entry(1f, 12f),
+            Entry(2f, 9f),
+            Entry(3f, 14f),
+            Entry(4f, 13f)
+        )
+
+        val dataSet = LineDataSet(entries, "${asset.symbol} Price")
+        dataSet.color = Color.CYAN
+        dataSet.valueTextColor = Color.WHITE
+        dataSet.setDrawFilled(true)
+
+        val lineData = LineData(dataSet)
+
+        binding.lineChart.data = lineData
+        binding.lineChart.description.text = "Last few data points"
+        binding.lineChart.setNoDataText("No chart data")
+        binding.lineChart.setTouchEnabled(true)
+        binding.lineChart.setPinchZoom(true)
+        binding.lineChart.invalidate() // Refresh chart
     }
 
     override fun onDestroyView() {
