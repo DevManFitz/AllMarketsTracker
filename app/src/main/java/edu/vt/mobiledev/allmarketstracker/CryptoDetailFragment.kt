@@ -148,19 +148,17 @@ class CryptoDetailFragment : Fragment() {
             binding.btnAll.setOnClickListener { loadBitcoinChart(days = 1095) }
         }
         else {
-            val entries = listOf(
-                Entry(0f, 10f),
-                Entry(1f, 12f),
-                Entry(2f, 9f),
-                Entry(3f, 14f),
-                Entry(4f, 13f)
-            )
-            val dataSet = LineDataSet(entries, "${asset.symbol} Price")
-            dataSet.color = Color.GRAY
-            dataSet.valueTextColor = Color.WHITE
-            dataSet.setDrawFilled(true)
-            binding.lineChart.data = LineData(dataSet)
+            binding.lineChart.clear()
+            binding.lineChart.setNoDataText("Chart data is currently only implemented for BTC.")
             binding.lineChart.invalidate()
+
+            // disable the buttons to avoid confusion
+            binding.btn1h.isEnabled = false
+            binding.btn24h.isEnabled = false
+            binding.btn7d.isEnabled = false
+            binding.btn30d.isEnabled = false
+            binding.btn1y.isEnabled = false
+            binding.btnAll.isEnabled = false
         }
 
         lifecycleScope.launch {
