@@ -47,6 +47,7 @@ class CryptoListViewModel : ViewModel() {
 
     private fun ApiCoin.toCryptoAsset(logoUrl: String): CryptoAsset {
         return CryptoAsset(
+            id = id,
             name = name,
             symbol = symbol,
             price = quote["USD"]?.price ?: 0.0,

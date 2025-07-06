@@ -163,6 +163,41 @@ class CryptoDetailFragment : Fragment() {
             binding.lineChart.invalidate()
         }
 
+        lifecycleScope.launch {
+            try {
+                val coinId = args.asset.id.toString()
+                val response = CoinMarketCapService.create().getLatestQuote(coinId)
+                if (response.isSuccessful) {
+                    val quoteResponse = response.body()?.data?.get(coinId)
+                    val quoteData = quoteResponse?.quote?.get("USD")
+
+                    with(binding) {
+                        marketCap.text = "Market Cap: $${quoteData?.market_cap?.formatAbbreviated() ?: "N/A"}"
+                        volume24h.text = "Volume (24h): $${quoteData?.volume_24h?.formatAbbreviated() ?: "N/A"}"
+                        maxSupply.text = "Max Supply: ${quoteResponse?.max_supply?.formatAbbreviated() ?: "N/A"}"
+                        allTimeHigh.text = "ATH: $111,970.17 (hardcoded)" // hard coded for now
+                        allTimeLow.text = "ATL: $0.04865 (hardcoded)"     // hard coded for now
+                        circulatingSupply.text = "Circulating: ${quoteResponse?.circulating_supply?.formatAbbreviated() ?: "N/A"}"
+                        totalSupply.text = "Total: ${quoteResponse?.total_supply?.formatAbbreviated() ?: "N/A"}"
+                        rank.text = "Rank: ${quoteResponse?.cmc_rank ?: "N/A"}"
+                    }
+                } else {
+                    Log.e("CMC Detail", "Error: ${response.code()} ${response.message()}")
+                }
+            } catch (e: Exception) {
+                Log.e("CMC Detail", "Exception", e)
+            }
+        }
+
+    }
+
+    fun Double.formatAbbreviated(): String {
+        return when {
+            this >= 1_000_000_000_000 -> String.format("%.2fT", this / 1_000_000_000_000)
+            this >= 1_000_000_000 -> String.format("%.2fB", this / 1_000_000_000)
+            this >= 1_000_000 -> String.format("%.2fM", this / 1_000_000)
+            else -> this.toString()
+        }
     }
 
     override fun onDestroyView() {

@@ -8,6 +8,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 import edu.vt.mobiledev.allmarketstracker.api.CoinMarketCapResponse
 import edu.vt.mobiledev.allmarketstracker.api.CryptoInfoResponse
+import edu.vt.mobiledev.allmarketstracker.api.QuoteResponse
 
 
 interface CoinMarketCapService {
@@ -22,6 +23,11 @@ interface CoinMarketCapService {
     suspend fun getCryptoInfo(
         @Query("id") ids: String
     ): Response<CryptoInfoResponse>
+
+    @GET("v1/cryptocurrency/quotes/latest")
+    suspend fun getLatestQuote(
+        @Query("id") id: String
+    ): Response<QuoteResponse>
 
     companion object {
         fun create(): CoinMarketCapService {

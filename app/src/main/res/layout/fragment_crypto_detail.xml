@@ -132,16 +132,45 @@
             android:orientation="vertical">
 
             <!-- Each row here -->
-            <TextView android:text="@string/market_cap_600b" style="@style/DetailStat" />
-            <TextView android:text="@string/volume_24h_100b" style="@style/DetailStat" />
-            <TextView android:text="@string/max_supply_21m" style="@style/DetailStat" />
-            <TextView android:text="@string/all_time_high_68_000" style="@style/DetailStat" />
-            <TextView android:text="@string/all_time_low_67" style="@style/DetailStat" />
-            <TextView android:text="@string/unlocked_market_cap_300b" style="@style/DetailStat" />
-            <TextView android:text="@string/fully_diluted_cap_1_2t" style="@style/DetailStat" />
-            <TextView android:text="@string/circulating_supply_19m" style="@style/DetailStat" />
-            <TextView android:text="@string/total_supply_21m" style="@style/DetailStat" />
-            <TextView android:text="@string/rank_1" style="@style/DetailStat" />
+            <TextView
+                android:id="@+id/market_cap"
+                android:text="@string/market_cap_600b"
+                style="@style/DetailStat" />
+
+            <TextView
+                android:id="@+id/volume_24h"
+                android:text="@string/volume_24h_100b"
+                style="@style/DetailStat" />
+
+            <TextView
+                android:id="@+id/max_supply"
+                android:text="@string/max_supply_21m"
+                style="@style/DetailStat" />
+
+            <TextView
+                android:id="@+id/all_time_high"
+                android:text="@string/all_time_high_68_000"
+                style="@style/DetailStat" />
+
+            <TextView
+                android:id="@+id/all_time_low"
+                android:text="@string/all_time_low_67"
+                style="@style/DetailStat" />
+
+            <TextView
+                android:id="@+id/circulating_supply"
+                android:text="@string/circulating_supply_19m"
+                style="@style/DetailStat" />
+
+            <TextView
+                android:id="@+id/total_supply"
+                android:text="@string/total_supply_21m"
+                style="@style/DetailStat" />
+
+            <TextView
+                android:id="@+id/rank"
+                android:text="@string/rank_1"
+                style="@style/DetailStat" />
 
         </LinearLayout>
 
