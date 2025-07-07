@@ -18,6 +18,7 @@ import edu.vt.mobiledev.allmarketstracker.AddTransactionDialogFragment
 import edu.vt.mobiledev.allmarketstracker.viewmodel.PortfolioViewModel
 import edu.vt.mobiledev.allmarketstracker.CryptoListViewModel
 import java.time.LocalDate
+import java.text.NumberFormat
 
 class PortfolioFragment : Fragment() {
 
@@ -47,10 +48,14 @@ class PortfolioFragment : Fragment() {
         adapter = PortfolioAdapter(emptyList())
         binding.portfolioRecyclerView.adapter = adapter
 
-        // Observe transactions and log changes
+        // Observe both transactions and asset list
         viewModel.transactions.observe(viewLifecycleOwner) { transactions ->
-            Log.d("PortfolioFragment", "Received ${transactions.size} transactions")
+            Log.d("PortfolioFragment", "Received "+transactions.size+" transactions")
             adapter.updateData(transactions)
+            updatePortfolioSummary(transactions, assetViewModel.assets.value)
+        }
+        assetViewModel.assetsLiveData.observe(viewLifecycleOwner) { assets ->
+            updatePortfolioSummary(viewModel.transactions.value ?: emptyList(), assets)
         }
 
         binding.addTransactionFab.setOnClickListener {
@@ -76,6 +81,34 @@ class PortfolioFragment : Fragment() {
                 }.show(parentFragmentManager, "CoinPickerDialog")
             }
         }
+    }
+
+    private fun updatePortfolioSummary(
+        transactions: List<PortfolioTransaction>?,
+        assets: List<CryptoAsset>?
+    ) {
+        if (transactions == null || assets == null) return
+
+        val costBasis = transactions.sumOf { it.amount * it.purchasePrice }
+        val currentValue = transactions.sumOf { tx ->
+            val asset = assets.find { it.symbol.equals(tx.symbol, ignoreCase = true) }
+            tx.amount * (asset?.price ?: 0.0)
+        }
+        val profit = currentValue - costBasis
+
+        val currencyFormat = NumberFormat.getCurrencyInstance()
+
+        binding.portfolioCostBasis.text = "Cost Basis: ${currencyFormat.format(costBasis)}"
+
+        // Format profit/loss with color and sign
+        val profitText = if (profit >= 0) {
+            binding.portfolioProfit.setTextColor(requireContext().getColor(android.R.color.holo_green_light))
+            "+${currencyFormat.format(profit)}"
+        } else {
+            binding.portfolioProfit.setTextColor(requireContext().getColor(android.R.color.holo_red_light))
+            "-${currencyFormat.format(-profit)}"
+        }
+        binding.portfolioProfit.text = "Profit/Loss: $profitText"
     }
 
     override fun onDestroyView() {

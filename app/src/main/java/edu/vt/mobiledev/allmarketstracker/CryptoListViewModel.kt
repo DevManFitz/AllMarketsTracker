@@ -3,6 +3,7 @@ package edu.vt.mobiledev.allmarketstracker
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.asLiveData
 import edu.vt.mobiledev.allmarketstracker.api.ApiCoin
 import edu.vt.mobiledev.allmarketstracker.model.CryptoAsset
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,6 +18,8 @@ class CryptoListViewModel : ViewModel() {
 
     private val _assets: MutableStateFlow<List<CryptoAsset>> = MutableStateFlow(emptyList())
     val assets: StateFlow<List<CryptoAsset>> = _assets.asStateFlow()
+
+    val assetsLiveData = assets.asLiveData()
 
     init {
         fetchAssets()
