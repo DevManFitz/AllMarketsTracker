@@ -18,6 +18,7 @@ import android.util.Log
 import androidx.annotation.RequiresExtension
 import edu.vt.mobiledev.allmarketstracker.api.BitcoinChartApi
 import androidx.lifecycle.lifecycleScope
+import edu.vt.mobiledev.allmarketstracker.model.CryptoAsset
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
@@ -27,7 +28,12 @@ class CryptoDetailFragment : Fragment() {
     private var _binding: FragmentCryptoDetailBinding? = null
     private val binding get() = checkNotNull(_binding) { "Binding is null" }
 
-    private val args: CryptoDetailFragmentArgs by navArgs()
+    private lateinit var asset: CryptoAsset
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        asset = requireArguments().getParcelable(ARG_ASSET)!!
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -129,7 +135,7 @@ class CryptoDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val asset = args.asset
+        val asset = asset
 
         binding.assetName.text = "${asset.name} (${asset.symbol})"
         binding.assetPrice.text = "$%.4f".format(asset.price)
@@ -163,7 +169,7 @@ class CryptoDetailFragment : Fragment() {
 
         lifecycleScope.launch {
             try {
-                val coinId = args.asset.id.toString()
+                val coinId = asset.id.toString()
                 val response = CoinMarketCapService.create().getLatestQuote(coinId)
                 if (response.isSuccessful) {
                     val quoteResponse = response.body()?.data?.get(coinId)
@@ -195,6 +201,18 @@ class CryptoDetailFragment : Fragment() {
             this >= 1_000_000_000 -> String.format("%.2fB", this / 1_000_000_000)
             this >= 1_000_000 -> String.format("%.2fM", this / 1_000_000)
             else -> this.toString()
+        }
+    }
+
+    companion object {
+        private const val ARG_ASSET = "asset"
+
+        fun newInstance(asset: CryptoAsset): CryptoDetailFragment {
+            return CryptoDetailFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable(ARG_ASSET, asset)
+                }
+            }
         }
     }
 

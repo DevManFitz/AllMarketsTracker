@@ -39,7 +39,10 @@ class CryptoListFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 clVM.assets.collect { assetList ->
-                    binding.assetRecyclerView.adapter = CryptoListAdapter(assetList)
+                    binding.assetRecyclerView.adapter = CryptoListAdapter(assetList) { asset ->
+                        (activity as? MainActivity)?.showDetailFragment(asset)
+
+                    }
                 }
             }
         }
