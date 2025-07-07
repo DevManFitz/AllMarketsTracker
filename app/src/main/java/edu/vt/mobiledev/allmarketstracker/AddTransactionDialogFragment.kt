@@ -28,6 +28,15 @@ class AddTransactionDialogFragment(
         return binding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        // Set dialog width to 90% of screen width
+        dialog?.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.datePickerButton.text = selectedDate.toString()
 
@@ -54,6 +63,7 @@ class AddTransactionDialogFragment(
                 dismiss()
             } else {
                 binding.errorText.text = "Please enter valid amount and price."
+                binding.errorText.visibility = View.VISIBLE
             }
         }
 
