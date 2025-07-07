@@ -53,8 +53,9 @@ class AddTransactionDialogFragment(
 
         binding.datePickerButton.setOnClickListener {
             val now = Calendar.getInstance()
-            DatePickerDialog(
+            val datePickerDialog = DatePickerDialog(
                 requireContext(),
+                android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
                 { _, year, month, dayOfMonth ->
                     selectedDate = LocalDate.of(year, month + 1, dayOfMonth)
                     binding.datePickerButton.text = selectedDate.toString()
@@ -62,7 +63,10 @@ class AddTransactionDialogFragment(
                 now.get(Calendar.YEAR),
                 now.get(Calendar.MONTH),
                 now.get(Calendar.DAY_OF_MONTH)
-            ).show()
+            )
+            datePickerDialog.datePicker.calendarViewShown = false
+            datePickerDialog.datePicker.spinnersShown = true
+            datePickerDialog.show()
         }
 
         binding.addTransactionButton.setOnClickListener {
