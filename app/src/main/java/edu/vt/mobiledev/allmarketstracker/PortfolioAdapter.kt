@@ -7,10 +7,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import edu.vt.mobiledev.allmarketstracker.model.CryptoAsset
 import edu.vt.mobiledev.allmarketstracker.model.PortfolioTransaction
+import java.math.RoundingMode
+import java.text.NumberFormat
 
 class PortfolioAdapter(
     private var transactions: List<PortfolioTransaction>,
+    private var assets: List<CryptoAsset>,
     private val onLongClick: (PortfolioTransaction) -> Unit
 ) : RecyclerView.Adapter<PortfolioAdapter.PortfolioViewHolder>() {
 
@@ -20,8 +24,13 @@ class PortfolioAdapter(
         private val amountText: TextView = view.findViewById(R.id.amount_text)
         private val priceText: TextView = view.findViewById(R.id.price_text)
         private val dateText: TextView = view.findViewById(R.id.date_text)
+        private val profitLossText: TextView = view.findViewById(R.id.profit_loss_text)
 
-        fun bind(transaction: PortfolioTransaction, onLongClick: (PortfolioTransaction) -> Unit) {
+        fun bind(
+            transaction: PortfolioTransaction,
+            assets: List<CryptoAsset>,
+            onLongClick: (PortfolioTransaction) -> Unit
+        ) {
             // Load the coin logo using Coil
             coinLogo.load(transaction.logoUrl) {
                 crossfade(true)
@@ -30,9 +39,31 @@ class PortfolioAdapter(
             }
             
             coinName.text = "${transaction.name} (${transaction.symbol})"
-            amountText.text = "Amount: ${transaction.amount}"
+            // Format amount with commas and up to 8 decimals
+            val amountFormatted = NumberFormat.getNumberInstance().apply {
+                minimumFractionDigits = 0
+                maximumFractionDigits = 8
+                roundingMode = RoundingMode.DOWN
+            }.format(transaction.amount)
+            amountText.text = "Amount: $amountFormatted"
             priceText.text = "Purchase Price: $${transaction.purchasePrice}"
             dateText.text = "Date: ${transaction.purchaseDate}"
+
+            // Calculate profit/loss for this transaction
+            val asset = assets.find { it.symbol.equals(transaction.symbol, ignoreCase = true) }
+            val currentPrice = asset?.price ?: 0.0
+            val profit = (currentPrice - transaction.purchasePrice) * transaction.amount
+
+            val currencyFormat = NumberFormat.getCurrencyInstance()
+            val profitText = if (profit >= 0) {
+                profitLossText.setTextColor(itemView.context.getColor(android.R.color.holo_green_light))
+                "+${currencyFormat.format(profit)}"
+            } else {
+                profitLossText.setTextColor(itemView.context.getColor(android.R.color.holo_red_light))
+                "-${currencyFormat.format(-profit)}"
+            }
+            profitLossText.text = "Profit/Loss: $profitText"
+
             itemView.setOnLongClickListener {
                 onLongClick(transaction)
                 true
@@ -47,13 +78,14 @@ class PortfolioAdapter(
     }
 
     override fun onBindViewHolder(holder: PortfolioViewHolder, position: Int) {
-        holder.bind(transactions[position], onLongClick)
+        holder.bind(transactions[position], assets, onLongClick)
     }
 
     override fun getItemCount(): Int = transactions.size
 
-    fun updateData(newTransactions: List<PortfolioTransaction>) {
+    fun updateData(newTransactions: List<PortfolioTransaction>, newAssets: List<CryptoAsset>) {
         transactions = newTransactions
+        assets = newAssets
         notifyDataSetChanged()
     }
 }

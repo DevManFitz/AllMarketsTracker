@@ -46,7 +46,7 @@ class PortfolioFragment : Fragment() {
 
         // Set up RecyclerView with LayoutManager
         binding.portfolioRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        adapter = PortfolioAdapter(emptyList()) { transaction ->
+        adapter = PortfolioAdapter(emptyList(), assetViewModel.assetsLiveData.value ?: emptyList()) { transaction ->
             AlertDialog.Builder(requireContext())
                 .setTitle("Delete Transaction")
                 .setMessage("Are you sure you want to delete this transaction?")
@@ -60,11 +60,11 @@ class PortfolioFragment : Fragment() {
 
         // Observe both transactions and asset list
         viewModel.transactions.observe(viewLifecycleOwner) { transactions ->
-            Log.d("PortfolioFragment", "Received "+transactions.size+" transactions")
-            adapter.updateData(transactions)
-            updatePortfolioSummary(transactions, assetViewModel.assets.value)
+            adapter.updateData(transactions, assetViewModel.assetsLiveData.value ?: emptyList())
+            updatePortfolioSummary(transactions, assetViewModel.assetsLiveData.value)
         }
         assetViewModel.assetsLiveData.observe(viewLifecycleOwner) { assets ->
+            adapter.updateData(viewModel.transactions.value ?: emptyList(), assets)
             updatePortfolioSummary(viewModel.transactions.value ?: emptyList(), assets)
         }
 
