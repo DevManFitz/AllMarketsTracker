@@ -10,7 +10,8 @@ import coil.load
 import edu.vt.mobiledev.allmarketstracker.model.PortfolioTransaction
 
 class PortfolioAdapter(
-    private var transactions: List<PortfolioTransaction>
+    private var transactions: List<PortfolioTransaction>,
+    private val onLongClick: (PortfolioTransaction) -> Unit
 ) : RecyclerView.Adapter<PortfolioAdapter.PortfolioViewHolder>() {
 
     class PortfolioViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -20,7 +21,7 @@ class PortfolioAdapter(
         private val priceText: TextView = view.findViewById(R.id.price_text)
         private val dateText: TextView = view.findViewById(R.id.date_text)
 
-        fun bind(transaction: PortfolioTransaction) {
+        fun bind(transaction: PortfolioTransaction, onLongClick: (PortfolioTransaction) -> Unit) {
             // Load the coin logo using Coil
             coinLogo.load(transaction.logoUrl) {
                 crossfade(true)
@@ -32,6 +33,10 @@ class PortfolioAdapter(
             amountText.text = "Amount: ${transaction.amount}"
             priceText.text = "Purchase Price: $${transaction.purchasePrice}"
             dateText.text = "Date: ${transaction.purchaseDate}"
+            itemView.setOnLongClickListener {
+                onLongClick(transaction)
+                true
+            }
         }
     }
 
@@ -42,7 +47,7 @@ class PortfolioAdapter(
     }
 
     override fun onBindViewHolder(holder: PortfolioViewHolder, position: Int) {
-        holder.bind(transactions[position])
+        holder.bind(transactions[position], onLongClick)
     }
 
     override fun getItemCount(): Int = transactions.size
