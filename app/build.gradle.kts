@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin") version "2.7.7"
-
+    id("kotlin-kapt")
 }
 
 android {
@@ -87,5 +87,7 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
     implementation("io.coil-kt:coil:2.4.0") // for crypto logo
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+    kapt("androidx.room:room-compiler:2.7.2")
 
 }
