@@ -1,5 +1,7 @@
 package edu.vt.mobiledev.allmarketstracker.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.time.LocalDate
 
 @Entity(tableName = "portfolio_transaction")
