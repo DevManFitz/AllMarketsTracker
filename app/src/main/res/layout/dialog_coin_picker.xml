@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="16dp"
+    android:background="@android:color/black">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/coinPickerRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:clipToPadding="false"
+        android:overScrollMode="always"
+        tools:listitem="@layout/item_coin_picker"/>
+</FrameLayout>
