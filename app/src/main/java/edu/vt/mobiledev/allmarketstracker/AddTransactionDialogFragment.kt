@@ -6,11 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import coil.load
 import edu.vt.mobiledev.allmarketstracker.databinding.DialogAddTransactionBinding
+import edu.vt.mobiledev.allmarketstracker.model.CryptoAsset
 import java.time.LocalDate
 import java.util.*
 
 class AddTransactionDialogFragment(
+    private val asset: CryptoAsset,
     private val onTransactionAdded: (amount: Double, price: Double, date: LocalDate) -> Unit
 ) : DialogFragment() {
 
@@ -38,6 +41,14 @@ class AddTransactionDialogFragment(
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        // Display the selected coin information
+        binding.coinName.text = "${asset.name} (${asset.symbol})"
+        binding.coinLogo.load(asset.logoUrl) {
+            crossfade(true)
+            placeholder(R.drawable.bch_logo)
+            error(R.drawable.error)
+        }
+        
         binding.datePickerButton.text = selectedDate.toString()
 
         binding.datePickerButton.setOnClickListener {

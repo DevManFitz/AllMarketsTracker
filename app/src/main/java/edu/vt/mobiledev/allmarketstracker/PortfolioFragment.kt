@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.vt.mobiledev.allmarketstracker.databinding.FragmentPortfolioBinding
 import edu.vt.mobiledev.allmarketstracker.model.PortfolioTransaction
+import edu.vt.mobiledev.allmarketstracker.model.CryptoAsset
 import edu.vt.mobiledev.allmarketstracker.AddTransactionDialogFragment
 import edu.vt.mobiledev.allmarketstracker.viewmodel.PortfolioViewModel
 import java.time.LocalDate
@@ -47,12 +48,23 @@ class PortfolioFragment : Fragment() {
         }
 
         binding.addTransactionFab.setOnClickListener {
-            AddTransactionDialogFragment { amount, price, date ->
+            // For now, we'll create a default Bitcoin asset
+            // TODO: In the future, open a coin picker dialog
+            val defaultAsset = CryptoAsset(
+                id = 1,
+                name = "Bitcoin",
+                symbol = "BTC",
+                price = 0.0,
+                logoUrl = "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+            )
+            
+            AddTransactionDialogFragment(defaultAsset) { amount, price, date ->
                 Log.d("PortfolioFragment", "Creating transaction: amount=$amount, price=$price, date=$date")
                 val transaction = PortfolioTransaction(
-                    coinId = 1,
-                    name = "Bitcoin",
-                    symbol = "BTC",
+                    coinId = defaultAsset.id,
+                    name = defaultAsset.name,
+                    symbol = defaultAsset.symbol,
+                    logoUrl = defaultAsset.logoUrl,
                     amount = amount,
                     purchasePrice = price,
                     purchaseDate = date

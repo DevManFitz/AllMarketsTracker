@@ -18,6 +18,33 @@
         android:layout_marginBottom="16dp"
         android:gravity="center"/>
 
+    <!-- Coin Information Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/coin_logo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="12dp"
+            android:contentDescription="Coin Logo"/>
+
+        <TextView
+            android:id="@+id/coin_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Bitcoin (BTC)"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"/>
+
+    </LinearLayout>
+
     <EditText
         android:id="@+id/amountEditText"
         android:layout_width="match_parent"

@@ -10,6 +10,7 @@ data class PortfolioTransaction(
     val coinId: Int,
     val symbol: String,
     val name: String,
+    val logoUrl: String,
     val amount: Double,
     val purchasePrice: Double,
     val purchaseDate: LocalDate
