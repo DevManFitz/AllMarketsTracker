@@ -25,25 +25,37 @@
                 android:textColor="@android:color/white"
                 android:background="?attr/colorPrimary" />
 
-            <!-- Fragment container -->
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/fragment_container"
-                android:name="androidx.navigation.fragment.NavHostFragment"
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                app:defaultNavHost="true"
-                app:navGraph="@navigation/nav_graph"
-                tools:context=".MainActivity" />
+                android:layout_height="match_parent">
+
+                <com.google.android.material.appbar.AppBarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tabLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </com.google.android.material.appbar.AppBarLayout>
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
         </LinearLayout>
 
-        <!-- Test API Button -->
-        <Button
-            android:id="@+id/test_api_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Test API"
-            android:layout_margin="16dp"
-            android:layout_gravity="bottom|center_horizontal" />
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/black"
+            android:visibility="gone"
+            android:elevation="10dp"
+            />
     </FrameLayout>
 </layout>

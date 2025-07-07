@@ -24,4 +24,9 @@
         android:name="asset"
         app:argType="edu.vt.mobiledev.allmarketstracker.model.CryptoAsset" />
     </fragment>
+    <fragment
+        android:id="@+id/portfolioFragment"
+        android:name="edu.vt.mobiledev.allmarketstracker.PortfolioFragment"
+        android:label="PortfolioFragment"
+        tools:layout="@layout/fragment_portfolio"/>
 </navigation>
