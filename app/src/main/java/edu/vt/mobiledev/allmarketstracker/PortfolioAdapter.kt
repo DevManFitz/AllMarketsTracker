@@ -1,5 +1,6 @@
 package edu.vt.mobiledev.allmarketstracker
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,12 +10,14 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import edu.vt.mobiledev.allmarketstracker.model.CryptoAsset
 import edu.vt.mobiledev.allmarketstracker.model.PortfolioTransaction
+import edu.vt.mobiledev.allmarketstracker.model.StockAsset
 import java.math.RoundingMode
 import java.text.NumberFormat
 
 class PortfolioAdapter(
     private var transactions: List<PortfolioTransaction>,
-    private var assets: List<CryptoAsset>,
+    private var cryptoAssets: List<CryptoAsset>,
+    private var stockAssets: List<StockAsset>,
     private val onLongClick: (PortfolioTransaction) -> Unit
 ) : RecyclerView.Adapter<PortfolioAdapter.PortfolioViewHolder>() {
 
@@ -25,10 +28,12 @@ class PortfolioAdapter(
         private val priceText: TextView = view.findViewById(R.id.price_text)
         private val dateText: TextView = view.findViewById(R.id.date_text)
         private val profitLossText: TextView = view.findViewById(R.id.profit_loss_text)
+        private val costBasisText: TextView = view.findViewById(R.id.cost_basis_text)
 
         fun bind(
             transaction: PortfolioTransaction,
-            assets: List<CryptoAsset>,
+            cryptoAssets: List<CryptoAsset>,
+            stockAssets: List<StockAsset>,
             onLongClick: (PortfolioTransaction) -> Unit
         ) {
             // Load the coin logo using Coil
@@ -50,8 +55,15 @@ class PortfolioAdapter(
             dateText.text = "Date: ${transaction.purchaseDate}"
 
             // Calculate profit/loss for this transaction
-            val asset = assets.find { it.symbol.equals(transaction.symbol, ignoreCase = true) }
-            val currentPrice = asset?.price ?: 0.0
+            val currentPrice = when (transaction.type) {
+                "crypto" -> cryptoAssets.find { it.symbol.equals(transaction.symbol, ignoreCase = true) }?.price ?: 0.0
+                "stock" -> {
+                    val found = stockAssets.find { it.symbol.equals(transaction.symbol, ignoreCase = true) }
+                    Log.d("PortfolioAdapter", "Looking for stock symbol: ${transaction.symbol}, found: $found")
+                    found?.currentPrice ?: 0.0
+                }
+                else -> 0.0
+            }
             val profit = (currentPrice - transaction.purchasePrice) * transaction.amount
 
             val currencyFormat = NumberFormat.getCurrencyInstance()
@@ -63,6 +75,10 @@ class PortfolioAdapter(
                 "-${currencyFormat.format(-profit)}"
             }
             profitLossText.text = "Profit/Loss: $profitText"
+
+            // Cost basis
+            val costBasis = transaction.amount * transaction.purchasePrice
+            costBasisText.text = "Cost Basis: ${currencyFormat.format(costBasis)}"
 
             itemView.setOnLongClickListener {
                 onLongClick(transaction)
@@ -78,14 +94,19 @@ class PortfolioAdapter(
     }
 
     override fun onBindViewHolder(holder: PortfolioViewHolder, position: Int) {
-        holder.bind(transactions[position], assets, onLongClick)
+        holder.bind(transactions[position], cryptoAssets, stockAssets, onLongClick)
     }
 
     override fun getItemCount(): Int = transactions.size
 
-    fun updateData(newTransactions: List<PortfolioTransaction>, newAssets: List<CryptoAsset>) {
+    fun updateData(
+        newTransactions: List<PortfolioTransaction>,
+        newCryptoAssets: List<CryptoAsset>,
+        newStockAssets: List<StockAsset>
+    ) {
         transactions = newTransactions
-        assets = newAssets
+        cryptoAssets = newCryptoAssets
+        stockAssets = newStockAssets
         notifyDataSetChanged()
     }
 }

@@ -18,6 +18,8 @@ import edu.vt.mobiledev.allmarketstracker.model.CryptoAsset
 import edu.vt.mobiledev.allmarketstracker.AddTransactionDialogFragment
 import edu.vt.mobiledev.allmarketstracker.viewmodel.PortfolioViewModel
 import edu.vt.mobiledev.allmarketstracker.CryptoListViewModel
+import edu.vt.mobiledev.allmarketstracker.model.StockAsset
+import edu.vt.mobiledev.allmarketstracker.viewmodel.StockListViewModel
 import java.time.LocalDate
 import java.text.NumberFormat
 
@@ -31,6 +33,8 @@ class PortfolioFragment : Fragment() {
 
     // Use activityViewModels to share with Market tab
     private val assetViewModel: CryptoListViewModel by activityViewModels()
+    private val stockListViewModel: StockListViewModel by activityViewModels()
+    private var stockAssets: List<StockAsset> = emptyList()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,7 +50,7 @@ class PortfolioFragment : Fragment() {
 
         // Set up RecyclerView with LayoutManager
         binding.portfolioRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        adapter = PortfolioAdapter(emptyList(), assetViewModel.assetsLiveData.value ?: emptyList()) { transaction ->
+        adapter = PortfolioAdapter(emptyList(), assetViewModel.assetsLiveData.value ?: emptyList(), stockAssets) { transaction ->
             AlertDialog.Builder(requireContext())
                 .setTitle("Delete Transaction")
                 .setMessage("Are you sure you want to delete this transaction?")
@@ -60,12 +64,23 @@ class PortfolioFragment : Fragment() {
 
         // Observe both transactions and asset list
         viewModel.transactions.observe(viewLifecycleOwner) { transactions ->
-            adapter.updateData(transactions, assetViewModel.assetsLiveData.value ?: emptyList())
-            updatePortfolioSummary(transactions, assetViewModel.assetsLiveData.value)
+            adapter.updateData(transactions, assetViewModel.assetsLiveData.value ?: emptyList(), stockAssets)
+            updatePortfolioSummary(transactions, assetViewModel.assetsLiveData.value, stockAssets)
+            val stockSymbolsInPortfolio = transactions.filter { it.type == "stock" }.map { it.symbol }
+            stockListViewModel.fetchStocksIfNeeded(stockSymbolsInPortfolio)
         }
         assetViewModel.assetsLiveData.observe(viewLifecycleOwner) { assets ->
-            adapter.updateData(viewModel.transactions.value ?: emptyList(), assets)
-            updatePortfolioSummary(viewModel.transactions.value ?: emptyList(), assets)
+            adapter.updateData(viewModel.transactions.value ?: emptyList(), assets, stockAssets)
+            updatePortfolioSummary(viewModel.transactions.value ?: emptyList(), assets, stockAssets)
+        }
+        stockListViewModel.stocksLiveData.observe(viewLifecycleOwner) { stocks ->
+            stockAssets = stocks
+            adapter.updateData(
+                viewModel.transactions.value ?: emptyList(),
+                assetViewModel.assetsLiveData.value ?: emptyList(),
+                stockAssets
+            )
+            updatePortfolioSummary(viewModel.transactions.value ?: emptyList(), assetViewModel.assetsLiveData.value, stockAssets)
         }
 
         binding.addTransactionFab.setOnClickListener {
@@ -88,13 +103,14 @@ class PortfolioFragment : Fragment() {
 
     private fun updatePortfolioSummary(
         transactions: List<PortfolioTransaction>?,
-        assets: List<CryptoAsset>?
+        cryptoAssets: List<CryptoAsset>?,
+        stockAssets: List<StockAsset>?
     ) {
-        if (transactions == null || assets == null) return
+        if (transactions == null || cryptoAssets == null || stockAssets == null) return
 
         val costBasis = transactions.sumOf { it.amount * it.purchasePrice }
         val currentValue = transactions.sumOf { tx ->
-            val asset = assets.find { it.symbol.equals(tx.symbol, ignoreCase = true) }
+            val asset = cryptoAssets.find { it.symbol.equals(tx.symbol, ignoreCase = true) }
             tx.amount * (asset?.price ?: 0.0)
         }
         val profit = currentValue - costBasis

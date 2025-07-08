@@ -16,6 +16,14 @@
         android:background="@android:color/black">
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="All Time Portfolio Value"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <TextView
             android:id="@+id/portfolioCostBasis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -66,12 +66,23 @@ class AddTransactionDialogFragment : DialogFragment() {
         val stockAsset = arguments?.getParcelable<StockAsset>(ARG_STOCK)
         // Use whichever is not null to pre-fill your dialog
         
-        // Display the selected coin information
-        binding.coinName.text = "${cryptoAsset?.name} (${cryptoAsset?.symbol})"
-        binding.coinLogo.load(cryptoAsset?.logoUrl) {
-            crossfade(true)
-            placeholder(R.drawable.bch_logo)
-            error(R.drawable.error)
+        // Display the selected coin/stock prefilled information
+        if (cryptoAsset != null) {
+            binding.coinName.text = "${cryptoAsset.name} (${cryptoAsset.symbol})"
+            binding.coinLogo.load(cryptoAsset.logoUrl) {
+                crossfade(true)
+                placeholder(R.drawable.bch_logo)
+                error(R.drawable.error)
+            }
+            binding.priceEditText.setText(cryptoAsset.price.toString())
+        } else if (stockAsset != null) {
+            binding.coinName.text = "${stockAsset.name} (${stockAsset.symbol})"
+            binding.coinLogo.load(stockAsset.logoUrl) {
+                crossfade(true)
+                placeholder(R.drawable.bch_logo)
+                error(R.drawable.error)
+            }
+            binding.priceEditText.setText(stockAsset.currentPrice.toString())
         }
         
         binding.datePickerButton.text = selectedDate.toString()
@@ -106,7 +117,21 @@ class AddTransactionDialogFragment : DialogFragment() {
                     logoUrl = cryptoAsset.logoUrl,
                     amount = amount,
                     purchasePrice = price,
-                    purchaseDate = selectedDate
+                    purchaseDate = selectedDate,
+                    type = "crypto"
+                )
+                portfolioViewModel.addTransaction(transaction)
+                dismiss()
+            } else if (stockAsset != null && amount != null && price != null) {
+                val transaction = PortfolioTransaction(
+                    coinId = null, // or use stockAsset.symbol.hashCode() if you want a unique int
+                    name = stockAsset.name,
+                    symbol = stockAsset.symbol,
+                    logoUrl = stockAsset.logoUrl,
+                    amount = amount,
+                    purchasePrice = price,
+                    purchaseDate = selectedDate,
+                    type = "stock"
                 )
                 portfolioViewModel.addTransaction(transaction)
                 dismiss()

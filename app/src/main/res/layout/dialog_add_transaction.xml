@@ -60,7 +60,7 @@
         android:id="@+id/priceEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Price per coin"
+        android:hint="Price per share/coin"
         android:inputType="numberDecimal"
         android:layout_marginBottom="8dp"
         android:background="@android:color/transparent"

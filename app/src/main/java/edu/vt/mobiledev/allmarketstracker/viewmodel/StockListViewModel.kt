@@ -56,4 +56,12 @@ class StockListViewModel : ViewModel() {
             }
         }
     }
+
+    fun fetchStocksIfNeeded(symbols: List<String>) {
+        // For each symbol not already in stocks, fetch and add it
+        val missing = symbols.filter { s -> stocks.value.none { it.symbol.equals(s, ignoreCase = true) } }
+        for (symbol in missing) {
+            searchAndLoadStocks(symbol)
+        }
+    }
 }

@@ -10,7 +10,7 @@ import edu.vt.mobiledev.allmarketstracker.model.Converters
 
 @Database(
     entities = [PortfolioTransaction::class],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -29,6 +29,7 @@ abstract class AppDatabase : RoomDatabase() {
                     "portfolio.db"
                 )
                 .addMigrations(MIGRATION_1_2)
+                .fallbackToDestructiveMigration()
                 .build().also { INSTANCE = it }
             }
 
