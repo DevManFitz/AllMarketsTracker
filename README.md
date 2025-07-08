@@ -34,6 +34,7 @@ Clone the repository using Git in Android Studio.
 - Modern dark theme for comfortable viewing.
 
 <Insert gif cycling the three tabs Stock → Crypto → Portfolio>
+// name of the file is feat_1_multitab.gif
 
 ---
 
@@ -43,7 +44,7 @@ Clone the repository using Git in Android Studio.
 - View real-time price, daily performance, and company info.
 - Responsive search with instant results.
 
-<Insert gif searching a stock and it populating the list>
+![Multi-Tab Navigation](assets/feat_1_multitab.gif)
 
 ---
 
