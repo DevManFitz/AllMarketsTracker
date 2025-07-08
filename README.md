@@ -1,6 +1,6 @@
 ## **AllMarketsTracker**
 
-![all_markets_zoomed.png](assets/all_markets_zoomed.png)
+![all_markets_zoomed.jpg](assets/all_markets_zoomed.jpg)
 
 **Purpose**
 
