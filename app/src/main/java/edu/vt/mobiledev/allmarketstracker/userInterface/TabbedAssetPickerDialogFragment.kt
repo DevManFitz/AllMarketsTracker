@@ -1,4 +1,4 @@
-package edu.vt.mobiledev.allmarketstracker
+package edu.vt.mobiledev.allmarketstracker.userInterface
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.google.android.material.tabs.TabLayout
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import edu.vt.mobiledev.allmarketstracker.R
 import edu.vt.mobiledev.allmarketstracker.model.CryptoAsset
 import edu.vt.mobiledev.allmarketstracker.model.StockAsset
 

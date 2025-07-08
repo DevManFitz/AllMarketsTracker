@@ -1,16 +1,16 @@
-package edu.vt.mobiledev.allmarketstracker
+package edu.vt.mobiledev.allmarketstracker.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import edu.vt.mobiledev.allmarketstracker.api.ApiCoin
+import edu.vt.mobiledev.allmarketstracker.api.CoinMarketCapService
 import edu.vt.mobiledev.allmarketstracker.model.CryptoAsset
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-
 
 class CryptoListViewModel : ViewModel() {
 

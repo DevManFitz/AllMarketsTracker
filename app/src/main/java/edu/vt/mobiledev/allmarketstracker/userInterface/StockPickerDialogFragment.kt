@@ -1,4 +1,4 @@
-package edu.vt.mobiledev.allmarketstracker
+package edu.vt.mobiledev.allmarketstracker.userInterface
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,9 +10,9 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import edu.vt.mobiledev.allmarketstracker.R
 import edu.vt.mobiledev.allmarketstracker.model.StockAsset
 import edu.vt.mobiledev.allmarketstracker.viewmodel.StockListViewModel
-import kotlinx.coroutines.flow.collect
 
 class StockPickerDialogFragment(
     private val onStockPicked: (StockAsset) -> Unit

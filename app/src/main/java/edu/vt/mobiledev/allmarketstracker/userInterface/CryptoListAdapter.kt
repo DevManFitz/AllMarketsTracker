@@ -1,13 +1,12 @@
-package edu.vt.mobiledev.allmarketstracker
+package edu.vt.mobiledev.allmarketstracker.userInterface
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import edu.vt.mobiledev.allmarketstracker.R
 import edu.vt.mobiledev.allmarketstracker.databinding.ListItemAssetBinding
 import edu.vt.mobiledev.allmarketstracker.model.CryptoAsset
-
-import androidx.navigation.findNavController
 
 class CryptoListAdapter(
     private val assets: List<CryptoAsset>,

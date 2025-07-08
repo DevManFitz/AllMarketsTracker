@@ -1,8 +1,9 @@
-package edu.vt.mobiledev.allmarketstracker
+package edu.vt.mobiledev.allmarketstracker.userInterface
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import edu.vt.mobiledev.allmarketstracker.userInterface.CryptoListFragment
 
 class MainPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
     override fun getItemCount() = 2

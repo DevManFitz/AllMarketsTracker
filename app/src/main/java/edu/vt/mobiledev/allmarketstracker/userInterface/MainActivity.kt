@@ -1,17 +1,19 @@
-package edu.vt.mobiledev.allmarketstracker
+package edu.vt.mobiledev.allmarketstracker.userInterface
 
 import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import androidx.fragment.app.Fragment
-import androidx.viewpager2.adapter.FragmentStateAdapter
+import edu.vt.mobiledev.allmarketstracker.R
 import edu.vt.mobiledev.allmarketstracker.model.CryptoAsset
-import edu.vt.mobiledev.allmarketstracker.viewmodel.StockListViewModel
-import edu.vt.mobiledev.allmarketstracker.StockListFragment
+import edu.vt.mobiledev.allmarketstracker.userInterface.CryptoDetailFragment
+import edu.vt.mobiledev.allmarketstracker.userInterface.PortfolioFragment
+import edu.vt.mobiledev.allmarketstracker.userInterface.StockListFragment
 
 class MainActivity : AppCompatActivity() {
 

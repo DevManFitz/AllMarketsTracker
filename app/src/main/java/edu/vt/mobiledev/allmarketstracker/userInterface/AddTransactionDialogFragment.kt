@@ -1,4 +1,4 @@
-package edu.vt.mobiledev.allmarketstracker
+package edu.vt.mobiledev.allmarketstracker.userInterface
 
 import android.app.DatePickerDialog
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import coil.load
+import edu.vt.mobiledev.allmarketstracker.R
 import edu.vt.mobiledev.allmarketstracker.databinding.DialogAddTransactionBinding
 import edu.vt.mobiledev.allmarketstracker.model.CryptoAsset
 import edu.vt.mobiledev.allmarketstracker.model.PortfolioTransaction

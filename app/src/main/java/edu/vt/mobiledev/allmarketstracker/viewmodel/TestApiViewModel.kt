@@ -1,8 +1,9 @@
-package edu.vt.mobiledev.allmarketstracker
+package edu.vt.mobiledev.allmarketstracker.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import edu.vt.mobiledev.allmarketstracker.api.CoinMarketCapService
 import kotlinx.coroutines.launch
 
 class TestApiViewModel constructor() : ViewModel() {

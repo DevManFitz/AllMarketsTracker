@@ -1,4 +1,4 @@
-package edu.vt.mobiledev.allmarketstracker
+package edu.vt.mobiledev.allmarketstracker.userInterface
 
 import android.os.Bundle
 import android.view.LayoutInflater

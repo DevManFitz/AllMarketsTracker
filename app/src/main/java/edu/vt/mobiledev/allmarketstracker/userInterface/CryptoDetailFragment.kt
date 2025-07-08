@@ -1,14 +1,12 @@
-package edu.vt.mobiledev.allmarketstracker
+package edu.vt.mobiledev.allmarketstracker.userInterface
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.navArgs
 import coil.load
 import edu.vt.mobiledev.allmarketstracker.databinding.FragmentCryptoDetailBinding
-
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -18,6 +16,7 @@ import android.util.Log
 import androidx.annotation.RequiresExtension
 import edu.vt.mobiledev.allmarketstracker.api.BitcoinChartApi
 import androidx.lifecycle.lifecycleScope
+import edu.vt.mobiledev.allmarketstracker.api.CoinMarketCapService
 import edu.vt.mobiledev.allmarketstracker.model.CryptoAsset
 import kotlinx.coroutines.launch
 import retrofit2.HttpException

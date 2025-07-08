@@ -1,4 +1,4 @@
-package edu.vt.mobiledev.allmarketstracker
+package edu.vt.mobiledev.allmarketstracker.userInterface
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +11,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.vt.mobiledev.allmarketstracker.databinding.FragmentCryptoListBinding
+import edu.vt.mobiledev.allmarketstracker.userInterface.CryptoListAdapter
+import edu.vt.mobiledev.allmarketstracker.viewmodel.CryptoListViewModel
 import kotlinx.coroutines.launch
 
 class CryptoListFragment : Fragment() {
