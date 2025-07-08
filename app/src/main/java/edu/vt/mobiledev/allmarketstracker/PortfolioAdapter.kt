@@ -36,6 +36,8 @@ class PortfolioAdapter(
             stockAssets: List<StockAsset>,
             onLongClick: (PortfolioTransaction) -> Unit
         ) {
+            val currencyFormat = NumberFormat.getCurrencyInstance()
+
             // Load the coin logo using Coil
             coinLogo.load(transaction.logoUrl) {
                 crossfade(true)
@@ -57,24 +59,24 @@ class PortfolioAdapter(
             // Calculate profit/loss for this transaction
             val currentPrice = when (transaction.type) {
                 "crypto" -> cryptoAssets.find { it.symbol.equals(transaction.symbol, ignoreCase = true) }?.price ?: 0.0
-                "stock" -> {
-                    val found = stockAssets.find { it.symbol.equals(transaction.symbol, ignoreCase = true) }
-                    Log.d("PortfolioAdapter", "Looking for stock symbol: ${transaction.symbol}, found: $found")
-                    found?.currentPrice ?: 0.0
-                }
-                else -> 0.0
+                "stock" -> stockAssets.find { it.symbol.equals(transaction.symbol, ignoreCase = true) }?.currentPrice ?: Double.NaN
+                else -> Double.NaN
             }
-            val profit = (currentPrice - transaction.purchasePrice) * transaction.amount
+            val profit = if (currentPrice.isNaN()) null else (currentPrice - transaction.purchasePrice) * transaction.amount
 
-            val currencyFormat = NumberFormat.getCurrencyInstance()
-            val profitText = if (profit >= 0) {
-                profitLossText.setTextColor(itemView.context.getColor(android.R.color.holo_green_light))
-                "+${currencyFormat.format(profit)}"
+            if (profit == null) {
+                profitLossText.text = "Profit/Loss: N/A"
+                profitLossText.setTextColor(itemView.context.getColor(android.R.color.darker_gray))
             } else {
-                profitLossText.setTextColor(itemView.context.getColor(android.R.color.holo_red_light))
-                "-${currencyFormat.format(-profit)}"
+                val profitText = if (profit >= 0) {
+                    profitLossText.setTextColor(itemView.context.getColor(android.R.color.holo_green_light))
+                    "+${currencyFormat.format(profit)}"
+                } else {
+                    profitLossText.setTextColor(itemView.context.getColor(android.R.color.holo_red_light))
+                    "-${currencyFormat.format(-profit)}"
+                }
+                profitLossText.text = "Profit/Loss: $profitText"
             }
-            profitLossText.text = "Profit/Loss: $profitText"
 
             // Cost basis
             val costBasis = transaction.amount * transaction.purchasePrice

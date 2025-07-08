@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@android:color/black"
     android:layout_width="match_parent"
@@ -11,13 +12,22 @@
         android:id="@+id/stockSearchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:queryHint="Search stocks..."
+        android:hint="Search stocks..."
+        app:queryHint="Search stocks..."
         android:iconifiedByDefault="false"
         android:background="@android:color/darker_gray"
         android:textColor="@android:color/white"
         android:textColorHint="@android:color/white"
         android:layout_marginBottom="8dp"
         tools:ignore="MissingConstraints" />
+
+    <ProgressBar
+        android:id="@+id/stockLoadingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        style="?android:attr/progressBarStyleLarge"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/stockPickerRecyclerView"

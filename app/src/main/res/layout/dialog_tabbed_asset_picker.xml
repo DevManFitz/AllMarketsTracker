@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@android:color/black"
     android:layout_width="match_parent"
@@ -10,8 +11,9 @@
         android:id="@+id/assetTabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/darker_gray"
-        android:theme="@style/ThemeOverlay.Material3.Dark.ActionBar"/>
+        android:background="@android:color/white"
+        app:tabTextColor="@android:color/black"
+        app:tabSelectedTextColor="@android:color/black"/>
 
     <FrameLayout
         android:id="@+id/assetPickerContainer"

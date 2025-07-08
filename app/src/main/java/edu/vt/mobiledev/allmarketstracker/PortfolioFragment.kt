@@ -22,6 +22,8 @@ import edu.vt.mobiledev.allmarketstracker.model.StockAsset
 import edu.vt.mobiledev.allmarketstracker.viewmodel.StockListViewModel
 import java.time.LocalDate
 import java.text.NumberFormat
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 class PortfolioFragment : Fragment() {
 
@@ -35,6 +37,9 @@ class PortfolioFragment : Fragment() {
     private val assetViewModel: CryptoListViewModel by activityViewModels()
     private val stockListViewModel: StockListViewModel by activityViewModels()
     private var stockAssets: List<StockAsset> = emptyList()
+
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
 
     override fun onCreateView(
         inflater: LayoutInflater,

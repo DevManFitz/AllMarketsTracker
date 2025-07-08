@@ -19,13 +19,17 @@ class StockListViewModel : ViewModel() {
     val stocks: StateFlow<List<StockAsset>> = _stocks.asStateFlow()
     val stocksLiveData = stocks.asLiveData()
 
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
+
     fun searchAndLoadStocks(query: String) {
         viewModelScope.launch {
+            _isLoading.value = true
             try {
                 val searchResponse = finnhubService.searchSymbol(query, apiKey)
                 if (searchResponse.isSuccessful) {
                     val symbols = searchResponse.body()?.result ?: emptyList()
-                    val stockAssets = mutableListOf<StockAsset>()
+                    val newStockAssets = mutableListOf<StockAsset>()
                     for (symbol in symbols) {
                         // Fetch quote and profile for each symbol
                         val quoteResp = finnhubService.getQuote(symbol.symbol, apiKey)
@@ -34,7 +38,7 @@ class StockListViewModel : ViewModel() {
                             val quote = quoteResp.body()
                             val profile = profileResp.body()
                             if (quote != null && profile != null) {
-                                stockAssets.add(
+                                newStockAssets.add(
                                     StockAsset(
                                         symbol = symbol.symbol,
                                         name = profile.name ?: symbol.description,
@@ -49,10 +53,22 @@ class StockListViewModel : ViewModel() {
                             }
                         }
                     }
-                    _stocks.value = stockAssets
+                    // Merge with existing stocks, replacing any with the same symbol
+                    val currentStocks = _stocks.value.toMutableList()
+                    for (stock in newStockAssets) {
+                        val existingIndex = currentStocks.indexOfFirst { it.symbol.equals(stock.symbol, ignoreCase = true) }
+                        if (existingIndex >= 0) {
+                            currentStocks[existingIndex] = stock
+                        } else {
+                            currentStocks.add(stock)
+                        }
+                    }
+                    _stocks.value = currentStocks
                 }
             } catch (e: Exception) {
                 // Handle error
+            } finally {
+                _isLoading.value = false
             }
         }
     }
