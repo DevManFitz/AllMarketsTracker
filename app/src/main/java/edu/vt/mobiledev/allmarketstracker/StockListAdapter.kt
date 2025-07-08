@@ -11,10 +11,14 @@ import edu.vt.mobiledev.allmarketstracker.model.StockAsset
 import java.text.NumberFormat
 
 class StockListAdapter(
-    private var stocks: List<StockAsset>
+    private var stocks: List<StockAsset>,
+    private val onItemClick: ((StockAsset) -> Unit)? = null
 ) : RecyclerView.Adapter<StockListAdapter.StockViewHolder>() {
 
-    class StockViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class StockViewHolder(
+        view: View,
+        private val onItemClick: ((StockAsset) -> Unit)?
+    ) : RecyclerView.ViewHolder(view) {
         private val logo: ImageView = view.findViewById(R.id.stock_logo)
         private val name: TextView = view.findViewById(R.id.stock_name)
         private val symbol: TextView = view.findViewById(R.id.stock_symbol)
@@ -44,13 +48,17 @@ class StockListAdapter(
                 "-${NumberFormat.getCurrencyInstance().format(-changeValue)} (${String.format("%.2f", percent)}%)"
             }
             change.text = changeText
+
+            itemView.setOnClickListener {
+                onItemClick?.invoke(stock)
+            }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StockViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_stock, parent, false)
-        return StockViewHolder(view)
+        return StockViewHolder(view, onItemClick)
     }
 
     override fun onBindViewHolder(holder: StockViewHolder, position: Int) {

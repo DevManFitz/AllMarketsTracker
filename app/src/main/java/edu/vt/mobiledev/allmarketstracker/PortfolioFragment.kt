@@ -69,28 +69,21 @@ class PortfolioFragment : Fragment() {
         }
 
         binding.addTransactionFab.setOnClickListener {
-            // Get the latest asset list from the shared ViewModel
-            assetViewModel.assets.value.let { assetList ->
-                if (assetList.isNullOrEmpty()) {
-                    Toast.makeText(requireContext(), "No coins available", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
+            TabbedAssetPickerDialogFragment(
+                cryptoAssets = assetViewModel.assets.value ?: emptyList(),
+                onCryptoPicked = { cryptoAsset ->
+                    showAddTransactionDialog(cryptoAsset)
+                },
+                onStockPicked = { stockAsset ->
+                    showAddTransactionDialog(stockAsset)
                 }
-                CoinPickerDialogFragment(assetList) { selectedAsset ->
-                    AddTransactionDialogFragment(selectedAsset) { amount, price, date ->
-                        val transaction = PortfolioTransaction(
-                            coinId = selectedAsset.id,
-                            name = selectedAsset.name,
-                            symbol = selectedAsset.symbol,
-                            logoUrl = selectedAsset.logoUrl,
-                            amount = amount,
-                            purchasePrice = price,
-                            purchaseDate = date
-                        )
-                        viewModel.addTransaction(transaction)
-                    }.show(parentFragmentManager, "AddTransactionDialog")
-                }.show(parentFragmentManager, "CoinPickerDialog")
-            }
+            ).show(parentFragmentManager, "TabbedAssetPickerDialog")
         }
+    }
+
+    private fun showAddTransactionDialog(asset: Any) {
+        val dialog = AddTransactionDialogFragment.newInstance(asset)
+        dialog.show(parentFragmentManager, "AddTransactionDialog")
     }
 
     private fun updatePortfolioSummary(

@@ -1,5 +1,9 @@
 package edu.vt.mobiledev.allmarketstracker.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class StockAsset(
     val symbol: String,
     val name: String,
@@ -9,4 +13,4 @@ data class StockAsset(
     val percentChange: Double?,  // Percent change
     val exchange: String?,
     val webUrl: String?
-)
+) : Parcelable
