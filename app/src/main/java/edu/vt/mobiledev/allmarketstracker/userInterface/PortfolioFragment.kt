@@ -13,8 +13,8 @@ import edu.vt.mobiledev.allmarketstracker.databinding.FragmentPortfolioBinding
 import edu.vt.mobiledev.allmarketstracker.model.PortfolioTransaction
 import edu.vt.mobiledev.allmarketstracker.model.CryptoAsset
 import edu.vt.mobiledev.allmarketstracker.viewmodel.PortfolioViewModel
-import edu.vt.mobiledev.allmarketstracker.viewmodel.CryptoListViewModel
 import edu.vt.mobiledev.allmarketstracker.model.StockAsset
+import edu.vt.mobiledev.allmarketstracker.viewmodel.CryptoListViewModel
 import edu.vt.mobiledev.allmarketstracker.viewmodel.StockListViewModel
 import java.text.NumberFormat
 import kotlinx.coroutines.flow.MutableStateFlow
