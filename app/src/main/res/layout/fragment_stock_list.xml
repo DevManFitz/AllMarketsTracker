@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@android:color/black"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="0dp">
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/stockSearchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:queryHint="Search stocks..."
+        android:iconifiedByDefault="false"
+        android:background="@android:color/darker_gray"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white"
+        android:layout_margin="8dp"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/stockRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="16dp"
+        tools:listitem="@layout/item_stock" />
+
+</LinearLayout>

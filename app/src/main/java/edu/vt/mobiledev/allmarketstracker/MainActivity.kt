@@ -10,6 +10,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import edu.vt.mobiledev.allmarketstracker.model.CryptoAsset
+import edu.vt.mobiledev.allmarketstracker.viewmodel.StockListViewModel
+import edu.vt.mobiledev.allmarketstracker.StockListFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,11 +26,12 @@ class MainActivity : AppCompatActivity() {
         tabLayout = findViewById(R.id.tabLayout)
 
         viewPager.adapter = object : FragmentStateAdapter(this) {
-            override fun getItemCount() = 2
+            override fun getItemCount() = 3
             override fun createFragment(position: Int): Fragment {
                 return when (position) {
-                    0 -> CryptoListFragment()
-                    1 -> PortfolioFragment()
+                    0 -> StockListFragment()
+                    1 -> CryptoListFragment()
+                    2 -> PortfolioFragment()
                     else -> throw IllegalArgumentException("Invalid tab position")
                 }
             }
@@ -36,8 +39,9 @@ class MainActivity : AppCompatActivity() {
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = when (position) {
-                0 -> "Market"
-                1 -> "Portfolio"
+                0 -> "Stock"
+                1 -> "Crypto"
+                2 -> "Portfolio"
                 else -> null
             }
         }.attach()
