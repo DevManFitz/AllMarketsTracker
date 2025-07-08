@@ -1,12 +1,14 @@
 ## **AllMarketsTracker**
 
-![all_tabs.png](assets/all_tabs_bigger.png)
+![all_tabs.png](assets/all_markets_zoomed.png)
 
 **Purpose**
 
 AllMarketsTracker is a comprehensive, free stock and crypto portfolio tracker for Android. Unlike many competitors that lock essential features behind a paywall, AllMarketsTracker aims to deliver a premium, user-friendly experience at no cost. The app is currently in its MVP stage, but is designed for ongoing development, with new features and improvements planned for future releases.
 
 ---
+
+![all_tabs.png](assets/all_tabs_bigger.png)
 
 ## **Installation**
 
