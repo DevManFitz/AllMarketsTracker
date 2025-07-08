@@ -44,7 +44,7 @@ Clone the repository using Git in Android Studio.
 - View real-time price, daily performance, and company info.
 - Responsive search with instant results.
 
-<img src="assets/feat_1_multitab.gif" width="600" height="400" alt="Multi-Tab Navigation">
+![Multi-Tab Navigation](assets/feat_1.gif)
 
 ---
 
