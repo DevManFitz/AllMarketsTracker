@@ -65,7 +65,7 @@ class PortfolioAdapter(
             val profit = if (currentPrice.isNaN()) null else (currentPrice - transaction.purchasePrice) * transaction.amount
 
             if (profit == null) {
-                profitLossText.text = "Profit/Loss: N/A"
+                profitLossText.text = "Profit/Loss: Loading..."
                 profitLossText.setTextColor(itemView.context.getColor(android.R.color.darker_gray))
             } else {
                 val profitText = if (profit >= 0) {
