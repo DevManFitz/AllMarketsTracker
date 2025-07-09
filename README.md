@@ -43,7 +43,7 @@ Clone the repository using Git in Android Studio.
 - View real-time price, daily performance, and company info.
 - Responsive search with instant results.
 
-<Insert gif searching a stock and it populating the list>
+![Multi-Tab Navigation](assets/feat_2.gif)
 
 ---
 
@@ -53,7 +53,7 @@ Clone the repository using Git in Android Studio.
 - View real-time price, daily performance, and (for Bitcoin) interactive price charts.
 - Hourly, daily, and all-time chart support for Bitcoin (BTC); more assets coming soon.
 
-<Insert gif scrolling CryptoListFragment>
+![Multi-Tab Navigation](assets/feat_3.gif)
 
 ---
 
@@ -64,7 +64,7 @@ Clone the repository using Git in Android Studio.
 - Each transaction displays real-time profit/loss, cost basis, and current value, updated with live API data.
 - Long-press to delete transactions with confirmation.
 
-<Insert gif adding 2 cryptos (BCH, XRP) and 1 stock (DB) >
+![Multi-Tab Navigation](assets/feat_4.gif)
 
 ---
 
