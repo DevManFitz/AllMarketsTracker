@@ -16,7 +16,7 @@ Clone the repository using Git in Android Studio.
 
 **Important:** After cloning, be sure to resync using the provided Gradle settings file.
 
-> **Note to grader:**
+> **📝 Note to grader:**
 
 > API keys for **CoinMarketCap** (crypto data) and **Finnhub** (stock data) are hardcoded in their respective /api directory files for ease of testing.
 
@@ -37,34 +37,34 @@ Clone the repository using Git in Android Studio.
 
 ---
 
-**Stock Tab**
+**📈 Stock Tab**
 
 - Search and browse stocks using the **Finnhub** API.
 - View real-time price, daily performance, and company info.
 - Responsive search with instant results.
 
-<Insert gif searching a stock and it populating the list>
+![Multi-Tab Navigation](assets/feat_2.gif)
 
 ---
 
-**Crypto Tab**
+**₿ Crypto Tab**
 
 - Search and browse cryptocurrencies using the **CoinMarketCap** API.
 - View real-time price, daily performance, and (for Bitcoin) interactive price charts.
 - Hourly, daily, and all-time chart support for Bitcoin (BTC); more assets coming soon.
 
-<Insert gif scrolling CryptoListFragment>
+![Multi-Tab Navigation](assets/feat_3.gif)
 
 ---
 
-**Portfolio Tab**
+**💼 Portfolio Tab**
 
 - Add and remove both crypto and stock transactions.
 - All transactions are stored locally using Room.
 - Each transaction displays real-time profit/loss, cost basis, and current value, updated with live API data.
 - Long-press to delete transactions with confirmation.
 
-<Insert gif adding 2 cryptos (BCH, XRP) and 1 stock (DB) >
+![Multi-Tab Navigation](assets/feat_4.gif)
 
 ---
 
@@ -108,7 +108,9 @@ Despite these efforts, you may occasionally experience delays or missing data if
 
 ## **Demo**
 
-<Insert Link to a video of two minute demo of all the features outlined above>
+<a href="https://youtube.com/shorts/wQKu-SnPoaI?feature=share" target="_blank">📹 Watch 2-Minute Demo</a> 
+
+*Click the link above to view a comprehensive demo of all features outlined above.* 
 
 ---
 
