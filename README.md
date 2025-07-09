@@ -16,7 +16,7 @@ Clone the repository using Git in Android Studio.
 
 **Important:** After cloning, be sure to resync using the provided Gradle settings file.
 
-> **Note to grader:**
+> **📝 Note to grader:**
 
 > API keys for **CoinMarketCap** (crypto data) and **Finnhub** (stock data) are hardcoded in their respective /api directory files for ease of testing.
 
@@ -37,7 +37,7 @@ Clone the repository using Git in Android Studio.
 
 ---
 
-**Stock Tab**
+**📈 Stock Tab**
 
 - Search and browse stocks using the **Finnhub** API.
 - View real-time price, daily performance, and company info.
@@ -47,7 +47,7 @@ Clone the repository using Git in Android Studio.
 
 ---
 
-**Crypto Tab**
+**₿ Crypto Tab**
 
 - Search and browse cryptocurrencies using the **CoinMarketCap** API.
 - View real-time price, daily performance, and (for Bitcoin) interactive price charts.
@@ -57,7 +57,7 @@ Clone the repository using Git in Android Studio.
 
 ---
 
-**Portfolio Tab**
+**💼 Portfolio Tab**
 
 - Add and remove both crypto and stock transactions.
 - All transactions are stored locally using Room.
